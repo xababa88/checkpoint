@@ -1,8 +1,7 @@
 
-# Gestion du partitionnement, de la création et du montage de disque sur Ubuntu
 
-## 1.1 **Préparation du disque**
-La VM a deux disques durs. Nous allons configurer le second disque de la manière suivante :
+
+
 
 ### Étapes :
 
@@ -10,7 +9,7 @@ La VM a deux disques durs. Nous allons configurer le second disque de la manièr
    ```bash
    lsblk
    ```
-  
+  ![](https://github.com/xababa88/checkpoint/blob/main/pictures/chekpoint%20lsblk.png)
 
 2. **Créer une table de partition**
    Utilisez `cfdisk` pour initialiser le disque :
@@ -22,6 +21,7 @@ La VM a deux disques durs. Nous allons configurer le second disque de la manièr
      - Première partition : 6G, type Linux filesystem.
      - Deuxième partition : le reste du disque, type Linux swap.
    - Enregistrez les modifications et quittez.
+![](https://github.com/xababa88/checkpoint/blob/main/pictures/creation%20%20sdb.png)
 
 3. **Formater les partitions**
    - Formater la partition DATA en ext4 :
@@ -33,6 +33,7 @@ La VM a deux disques durs. Nous allons configurer le second disque de la manièr
      sudo mkswap -L SWAP /dev/sdb2
      sudo swapon /dev/sdb2
      ```
+![](https://github.com/xababa88/checkpoint/blob/main/pictures/ext4%20sdb1.png)
 
 4. **Désactiver l'ancien SWAP**
    - Identifiez l'ancien swap :
@@ -57,18 +58,13 @@ La VM a deux disques durs. Nous allons configurer le second disque de la manièr
    ```
    LABEL=SWAP none swap sw 0 0
    ```
+![](https://github.com/xababa88/checkpoint/blob/main/pictures/edition%20swap.png)
 
 5. **Vérifiez les partitions**
    ```bash
    lsblk -f
    ```
 
-   Exemple :
-   ```
-   NAME   FSTYPE LABEL  SIZE MOUNTPOINT
-   sdb1   ext4   DATA    6G
-   sdb2   swap   SWAP    4G
-   ```
 
 ---
 
@@ -86,10 +82,9 @@ La partition DATA doit être montée automatiquement au démarrage dans `/mnt/da
    ```bash
    sudo blkid
    ```
-   Exemple de sortie :
-   ```
-   /dev/sdb1: UUID="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" TYPE="ext4" LABEL="DATA"
-   ```
+  
+
+![](https://github.com/xababa88/checkpoint/blob/main/pictures/id%20disk.png)
 
 3. **Modifier `/etc/fstab` pour un montage automatique**
    Éditez le fichier `/etc/fstab` :
@@ -100,6 +95,9 @@ La partition DATA doit être montée automatiquement au démarrage dans `/mnt/da
    ```
    UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx /mnt/data ext4 defaults 0 2
    ```
+![](https://github.com/xababa88/checkpoint/blob/main/pictures/montage%20dem.png)
+
+ < dans la capture j'avais oublier le "s" a defaults
 
 4. **Monter la partition sans redémarrer**
    ```bash
@@ -110,11 +108,8 @@ La partition DATA doit être montée automatiquement au démarrage dans `/mnt/da
    ```bash
    df -h
    ```
-   Exemple de sortie :
-   ```
-   Filesystem      Size  Used Avail Use% Mounted on
-   /dev/sdb1       6G    0    6G    0%  /mnt/data
-   ```
+  
+   ![](https://github.com/xababa88/checkpoint/blob/main/pictures/montage%20ok.png)
 
 ---
 
