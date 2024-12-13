@@ -19,13 +19,14 @@ echo '- "Même des tildes ~ ?"'
 echo '- "Evidemment !"'
 
 6. # Réponse : fg 1
-7. # Réponse :
+   
+8. # Réponse :
+   
 Couche 2 : Switches
-
 Maintiennent des tables de MAC addresses et envoient les trames uniquement aux périphériques destinataires.
 Utilisent les adresses MAC pour la communication.
-Couche 3 : Routeurs
 
+Couche 3 : Routeurs
 Orientent le trafic entre différents sous-réseaux à l'aide d'adresses IP.
 Utilisent des tables de routage pour déterminer la meilleure route.
 
